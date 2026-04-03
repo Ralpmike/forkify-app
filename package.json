@@ -1,0 +1,31 @@
+{
+  "name": "forkify-app",
+  "version": "1.0.0",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "description": "A simple recipe app built with JavaScript, HTML, and CSS. ",
+  "source": "./index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "keywords": [
+    "javascript",
+    "html",
+    "css",
+    "recipe app",
+    "forkify"
+  ],
+  "author": "Raphael Michael",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-inline-string": "^2.16.4",
+    "@parcel/transformer-sass": "^2.16.4",
+    "parcel": "^2.16.4",
+    "url": "^0.11.4"
+  },
+  "dependencies": {
+    "core-js": "^3.49.0",
+    "fraction.js": "^5.3.4",
+    "regenerator-runtime": "^0.14.1"
+  }
+}
