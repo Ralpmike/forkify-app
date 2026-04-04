@@ -25,6 +25,10 @@ class RecipeView {
     this.#parentElem.insertAdjacentHTML("afterbegin", spinnerMarkup);
   }
 
+  addHandlerRender(handler){
+    ['load', 'hashchange'].forEach(ev => window.addEventListener(ev, handler));
+  }
+
   displayErrorMessage = function (message) {
     this.#parentElem.innerHTML = "";
     const markup = `
