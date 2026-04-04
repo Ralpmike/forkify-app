@@ -14,6 +14,7 @@ class RecipeView {
     this.#parentElem.insertAdjacentHTML('afterbegin', recipeMarkup);
   }
 
+
   renderSpinner() {
     this.#clear();
     const spinnerMarkup = `
@@ -25,6 +26,7 @@ class RecipeView {
   `;
     this.#parentElem.insertAdjacentHTML('afterbegin', spinnerMarkup);
   }
+
 
   addHandlerRender(handler) {
     ['load', 'hashchange'].forEach(ev => window.addEventListener(ev, handler));
@@ -44,7 +46,7 @@ class RecipeView {
       `;
     this.#parentElem.insertAdjacentHTML('afterbegin', markup);
   }
-  
+
   displaySuccessMessage(message = this.#successMessage) {
     this.#clear();
     const markup = `
@@ -60,6 +62,7 @@ class RecipeView {
     this.#parentElem.insertAdjacentHTML('afterbegin', markup);
   }
 
+  
   #clear() {
     this.#parentElem.innerHTML = '';
   }

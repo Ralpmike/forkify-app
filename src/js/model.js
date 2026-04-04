@@ -1,30 +1,49 @@
-
-import { API_URL } from "../js/config.js";
-import { getJSON } from "./helpers.js";
+import { API_URL } from '../js/config.js';
+import { getJSON } from './helpers.js';
 
 export const state = {
-    recipe: {},
-}
+  recipe: {},
+  search: {
+    query: '',
+    results: [],
+  },
+};
 
 export const loadRecipe = async function (id) {
+  try {
+    const data = await getJSON(`${API_URL}/${id}`);
 
-    try {
+    const { recipe } = data.data;
 
-        const data = await getJSON(`${API_URL}/${id}`);
+    state.recipe = {
+      id: recipe.id,
+      title: recipe.title,
+      publisher: recipe.publisher,
+      sourceUrl: recipe.source_url,
+      imageUrl: recipe.image_url,
+      servings: recipe.servings,
+      cookingTime: recipe.cooking_time,
+      ingredients: recipe.ingredients,
+    };
+  } catch (err) {
+    throw err;
+  }
+};
 
-        const { recipe } = data.data;
+export const loadSearchResults = async function (query) {
+  state.search.query = query;
+  try {
+    const data = await getJSON(`${API_URL}?search=${query}`);
 
-        state.recipe = {
-            id: recipe.id,
-            title: recipe.title,
-            publisher: recipe.publisher,
-            sourceUrl: recipe.source_url,
-            imageUrl: recipe.image_url,
-            servings: recipe.servings,
-            cookingTime: recipe.cooking_time,
-            ingredients: recipe.ingredients,
-        };
-    } catch (err) {
-        throw err;
-    }
-}
+    state.search.results = data.data.recipes.map(recipe => {
+      return {
+        id: recipe.id,
+        title: recipe.title,
+        publisher: recipe.publisher,
+        imageUrl: recipe.image_url,
+      };
+    });
+  } catch (err) {
+    throw err;
+  }
+};
