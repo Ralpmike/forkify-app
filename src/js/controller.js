@@ -15,9 +15,7 @@ const getRecipe = async function () {
     //? render recipe
     recipeView.render(model.state.recipe);
   } catch (error) {
-    recipeView.displayErrorMessage(
-      error.message || 'No recipes found for your query. Please try again!'
-    );
+    recipeView.displayErrorMessage(error.message);
   }
 };
 
@@ -25,4 +23,3 @@ const init = function () {
   recipeView.addHandlerRender(getRecipe);
 };
 init();
-
