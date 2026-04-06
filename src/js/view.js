@@ -1,0 +1,60 @@
+import icons from 'url:../img/icons.svg';
+
+export default class View {
+  _data;
+  render(data) {
+    if (!data || (Array.isArray(data) && data.length === 0)) {
+      return this.displayErrorMessage();
+    }
+    this._data = data;
+    const recipeMarkup = this._generateMarkUp();
+    this._clear();
+    this._parentElem.insertAdjacentHTML('afterbegin', recipeMarkup);
+  }
+
+  renderSpinner() {
+    this._clear();
+    const spinnerMarkup = `
+        <div class="spinner">
+            <svg>
+                 <use href="${icons}#icon-loader"></use>
+            </svg>
+        </div>
+  `;
+    this._parentElem.insertAdjacentHTML('afterbegin', spinnerMarkup);
+  }
+
+  displayErrorMessage(message = this._errorMessage) {
+    this._clear();
+    const markup = `
+        <div class="error">
+          <div>
+            <svg>
+              <use href="${icons}#icon-alert-triangle"></use>
+            </svg>
+          </div>
+          <p>${message}</p>
+        </div>
+      `;
+    this._parentElem.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  displaySuccessMessage(message = this._successMessage) {
+    this._clear();
+    const markup = `
+        <div class="message">
+          <div>
+            <svg>
+              <use href="${icons}#icon-smile"></use>
+            </svg>
+          </div>
+          <p>${message}</p>
+        </div>
+      `;
+    this._parentElem.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  _clear() {
+    this._parentElem.innerHTML = '';
+  }
+}

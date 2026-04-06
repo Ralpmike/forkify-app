@@ -16,6 +16,9 @@ export const getJSON = async function (url, errorMsg = 'Something went wrong') {
         if (!response.ok) {
             throw new Error(`${ data.message || errorMsg} (${response.status})`);
         }
+        // if(data.results === 0 ){
+        //   throw new Error(`No recipes found for your query. Please try again!`);
+        // }
 
         return data;
     } catch (err) {
