@@ -11,6 +11,27 @@ class RecipeView extends View {
     ['load', 'hashchange'].forEach(ev => window.addEventListener(ev, handler));
   }
 
+  addHandlerUpdateServings(handler) {
+    console.log(this._data);
+    this._parentElem.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--update-servings');
+      if (!btn) {
+        return;
+      }
+
+      console.log(btn.dataset);
+      const { updateTo } = btn.dataset;
+
+      if (+updateTo === this._data?.servings) {
+        return;
+      }
+
+      if (+updateTo > 0) {
+        handler(+updateTo);
+      }
+    });
+  }
+
   _generateMarkUp() {
     return `<figure class="recipe__fig">
                   <img src="${
@@ -40,12 +61,16 @@ class RecipeView extends View {
                     <span class="recipe__info-text">servings</span>
         
                     <div class="recipe__info-buttons">
-                      <button class="btn--tiny btn--increase-servings">
+                      <button data-update-to="${
+                        this._data.servings - 1
+                      }" class="btn--tiny btn--update-servings">
                         <svg>
                           <use href="${icons}#icon-minus-circle"></use>
                         </svg>
                       </button>
-                      <button class="btn--tiny btn--increase-servings">
+                      <button data-update-to="${
+                        this._data.servings + 1
+                      }" class="btn--tiny btn--update-servings">
                         <svg>
                           <use href="${icons}#icon-plus-circle"></use>
                         </svg>
@@ -67,7 +92,7 @@ class RecipeView extends View {
                   <h2 class="heading--2">Recipe ingredients</h2>
                   <ul class="recipe__ingredient-list">
                   ${this._data?.ingredients
-                    .map(this._generateMarkupIngredient)
+                    ?.map(this._generateMarkupIngredient)
                     .join('')}
                 
                   </ul>
@@ -100,9 +125,9 @@ class RecipeView extends View {
                 <svg class="recipe__icon">
                   <use href="${icons}#icon-check"></use>
                 </svg>
-                <div class="recipe__quantity">${new Fraction(
-                  ingredient.quantity
-                ).toFraction(true)}</div>
+             
+                <div class="recipe__quantity">
+                  ${new Fraction(ingredient.quantity).toFraction(true)}</div>
                 <div class="recipe__description">
                   <span class="recipe__unit">g</span>
                   ${ingredient.description}
@@ -112,3 +137,7 @@ class RecipeView extends View {
 }
 
 export default new RecipeView();
+
+//  <div class="recipe__quantity">
+//
+//  </div>;

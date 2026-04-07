@@ -8,7 +8,7 @@ import paginationView from './views/paginationView.js';
 //   module.hot.accept();
 // }
 
-const contolRecipes = async function () {
+const controlRecipes = async function () {
   const id = window.location.hash.slice(1);
   //? not id, do nothing
   if (!id) return;
@@ -25,7 +25,7 @@ const contolRecipes = async function () {
   }
 };
 
-const controllSearchResults = async function () {
+const controlSearchResults = async function () {
   //? get query
   const query = searchView.getQuery();
   //? if no query, do nothing
@@ -54,15 +54,25 @@ const controllSearchResults = async function () {
 
 export const controlPagination = function (gotoPage){
   //? render new page
+  console.log(gotoPage);
   resultView.render(model.getSearchResultsPage(gotoPage));
 
   //? Render new pagination
   paginationView.render(model.state.search);
 }
 
+export const controlServings = function (newServings){
+  //? Update the recipe servings (in state)
+  model.updateServings(newServings);
+
+  //? Update the recipe view
+  recipeView.render(model.state.recipe);
+}
+
 const init = function () {
-  recipeView.addHandlerRender(contolRecipes);
-  searchView.addHandlerSearch(controllSearchResults);
+  recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  recipeView.addHandlerUpdateServings(controlServings);
 };
 init();
