@@ -1,5 +1,4 @@
 import View from '../view';
-import icons from 'url:../../img/icons.svg';
 
 class ResultView extends View {
   _parentElem = document.querySelector('.results');
@@ -13,9 +12,11 @@ class ResultView extends View {
   }
 
   _generateSearchMarkUp(recipe) {
+    const id = window.location.hash.slice(1);
+    const isSlected = recipe.id === id
     return `
       <li class="preview">
-              <a class="preview__link" href="#${recipe.id}">
+              <a class="preview__link ${isSlected && 'preview__link--active'}" href="#${recipe.id}">
                 <figure class="preview__fig">
                   <img src="${recipe.imageUrl}" alt="${recipe.title}" />
                 </figure>

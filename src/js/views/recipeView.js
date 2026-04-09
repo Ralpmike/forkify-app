@@ -10,7 +10,7 @@ class RecipeView extends View {
   addHandlerRender(handler) {
     ['load', 'hashchange'].forEach(ev => window.addEventListener(ev, handler));
   }
-
+  
   addHandlerUpdateServings(handler) {
     console.log(this._data);
     this._parentElem.addEventListener('click', function (e) {

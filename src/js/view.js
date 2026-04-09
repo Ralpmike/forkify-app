@@ -12,6 +12,37 @@ export default class View {
     this._parentElem.insertAdjacentHTML('afterbegin', recipeMarkup);
   }
 
+  update(data) {
+    this._data = data;
+    const newRecipeMarkup = this._generateMarkUp();
+
+    const newDom = document
+      .createRange()
+      .createContextualFragment(newRecipeMarkup);
+    const newElements = Array.from(newDom.querySelectorAll('*'));
+    const curElements = Array.from(this._parentElem.querySelectorAll('*'));
+
+    newElements.forEach((newEl, i) => {
+      const curElem = curElements[i];
+
+      if (
+        !newEl.isEqualNode(curElem) &&
+        newEl.firstChild?.nodeValue.trim() !== ''
+      ) {
+        curElem.textContent = newEl.textContent;
+
+        //? does the same as above
+        curElem.replaceWith(newEl);
+      }
+
+      if (!newEl.isEqualNode(curElem)) {
+        Array.from(newEl.attributes).forEach(attr =>
+          curElem.setAttribute(attr.name, attr.value)
+        );
+      }
+    });
+  }
+
   renderSpinner() {
     this._clear();
     const spinnerMarkup = `
