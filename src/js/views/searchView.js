@@ -1,4 +1,3 @@
-import icons from 'url:../../img/icons.svg';
 
 class SearchView {
   _search = document.querySelector('.search');
